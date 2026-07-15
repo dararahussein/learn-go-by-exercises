@@ -1,12 +1,18 @@
 package set08
 
 import (
+	"flag"
 	"maps"
 	"sync"
 	"testing"
 )
 
+var runRaceDemo = flag.Bool("race-demo", false, "run the deliberately racy counter test")
+
 func TestUnsafeCounterRace(t *testing.T) {
+	if !*runRaceDemo {
+		t.Skip("deliberate race demo; run with -args -race-demo")
+	}
 	var c UnsafeCounter
 	var wg sync.WaitGroup
 	for i := 0; i < 100; i++ {

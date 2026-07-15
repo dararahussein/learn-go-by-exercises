@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -16,8 +17,12 @@ func TestGetTasks(t *testing.T) {
 	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/json" {
 		t.Errorf("GET status/type = %d/%q", rec.Code, rec.Header().Get("Content-Type"))
 	}
-	if body := rec.Body.String(); body == "" || body == "null\n" {
-		t.Errorf("GET body = %q; want tasks JSON", body)
+	var got []task.Task
+	if err := json.NewDecoder(rec.Body).Decode(&got); err != nil {
+		t.Fatalf("decode GET /tasks: %v", err)
+	}
+	if len(got) != 1 || got[0].ID != 1 || got[0].Text != "learn Go" || got[0].Done {
+		t.Errorf("GET tasks = %+v; want one pending learn Go task", got)
 	}
 }
 

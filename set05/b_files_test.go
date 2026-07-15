@@ -31,6 +31,16 @@ func TestWordFrequency(t *testing.T) {
 	}
 }
 
+func TestCountLines(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "three.txt")
+	if err := WriteLines(path, []string{"one", "two", "three"}); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := CountLines(path); err != nil || got != 3 {
+		t.Errorf("CountLines = (%d, %v); want (3, nil)", got, err)
+	}
+}
+
 func TestReadLinesMissing(t *testing.T) {
 	if _, err := ReadLines(filepath.Join(t.TempDir(), "missing")); err == nil {
 		t.Error("reading a missing file should return an error")

@@ -20,6 +20,10 @@ go fmt ./...
 go vet ./...
 ```
 
+If `go test -race` reports that the race detector requires CGO, use the
+project's Linux/WSL development environment or enable CGO with a supported C
+toolchain. That message is an environment problem, not evidence about the code.
+
 For ordinary stub exercises:
 
 1. Read the task and test failure.
@@ -94,3 +98,20 @@ Before moving on:
 
 Course maintainers should use [CURRICULUM_CHECKLIST.md](CURRICULUM_CHECKLIST.md)
 when revising exercises.
+
+## Maintainer validation
+
+The checked-in starter is intentionally red. Validate structural health without
+executing exercises:
+
+```sh
+go test -run '^$' ./...    # compile every package and test
+git diff --check           # reject whitespace errors
+```
+
+Then run each set normally and confirm it fails through assertions or an
+explicit learner-owned `t.Fatal`, never a compile error, panic, or timeout.
+`go vet ./...` intentionally reports the unexported JSON field in set05's
+`z_fixme.go`; that diagnostic is evidence for the exercise and disappears when
+the learner repairs it. The opt-in race demonstration in set08 is skipped during
+ordinary full-suite and race-detector runs.
