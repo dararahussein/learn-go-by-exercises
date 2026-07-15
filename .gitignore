@@ -1,0 +1,16 @@
+# Compiled binaries / test artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Capstone (Set06) runtime data — learners generate this by running the CLI
+tasks.json
+
+# Editor / OS cruft
+.vscode/
+.idea/
+.DS_Store
