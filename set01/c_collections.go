@@ -28,6 +28,12 @@ func Doubled(xs []int) []int {
 	return out
 }
 
+// ArrayTotal is brief array exposure. [3]int has its length in its type;
+// arrays are useful occasionally, but slices are the everyday collection.
+func ArrayTotal(xs [3]int) int {
+	return 0 // TODO: range over the array
+}
+
 // Sum returns the total of xs. Sum(nil) == 0.
 func Sum(xs []int) int {
 	return 0 // TODO: implement Sum

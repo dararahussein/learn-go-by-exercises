@@ -2,6 +2,10 @@
 
 Structs and methods — how you make your own types.
 
+Warm-up (from memory, no peeking at set01): on paper, write the signature of a
+function that returns both a quotient and a remainder. Multiple return values
+are about to matter again.
+
 Tasks:
 - [ ] Implement each method by replacing its zero-value stub (marked TODO).
 - [ ] Run `go test ./set02/` after every change.
@@ -30,7 +34,7 @@ const (
 
 // DONE FOR YOU: this makes Scale print nicely.
 // (Having a String() method means Scale satisfies the fmt.Stringer interface —
-// c_interfaces.go explains what that sentence means.)
+// set03's interfaces file explains what that sentence means.)
 func (s Scale) String() string {
 	switch s {
 	case Celsius:

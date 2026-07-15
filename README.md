@@ -1,93 +1,96 @@
 # Learn Go by Exercises
 
-A hands-on course of small, focused exercises with instant test feedback.
-Modeled on `learn-haskell-by-exercises`: you learn by *writing code* and getting
-fast PASS/FAIL feedback, not by reading long tutorials.
+A ten-day, code-first introduction to Go for software engineering interns. The
+goal is not expertise in two weeks. The goal is enough fluency to read an
+existing Go repository, make small-to-medium changes safely, debug common
+failures, and keep learning through documentation and experiments.
 
-## Goal
+Most of your time should be spent writing, running, predicting, debugging, and
+explaining code. Explanations here are intentionally short; the exercises and
+the feedback loop do most of the teaching.
 
-Get you writing real Go fast — enough to start building a small CLI or web tool
-of your own. Six short sets; roughly a set a day, comfortably under a week. The
-last set IS a small project, and by then you'll have built every piece of it
-once already.
-
-## How it works
-
-Every exercise file has functions that start as stubs returning a dummy value,
-so the file **compiles but its test fails**. Your job is to turn red tests
-green.
+## The feedback loop
 
 ```sh
-go test ./set01/        # see the failing "board" for a set
-go test ./set01/ -v     # verbose: every test named PASS/FAIL
-go test -run TestAbs ./set01/   # just one
+go test ./set01/                       # the failing board for one set
+go test -run TestReverse ./set01/      # one targeted test
+go test -race ./set08/                 # detect races
+go test -cover ./set04/                # inspect test coverage
+go fmt ./...
+go vet ./...
 ```
 
-The first function in each file is **done for you** — study it, it shows the
-pattern the rest of the file wants. A `// TODO` marks what's yours to write.
+For ordinary stub exercises:
 
-## The feedback loop (the most important habit)
+1. Read the task and test failure.
+2. Predict what must change.
+3. Make one small change.
+4. Run the narrowest relevant test.
+5. When it is green, refactor for clarity and run the full set.
 
-1. Open an exercise file; read the header comment (your task list).
-2. Replace a `// TODO` stub with a real implementation. Save.
-3. `go test ./setNN/` — read the failure, adjust, repeat until green.
+For `z_fixme` exercises, the implementation already exists and is wrong. Write
+your theory in the `// A:` line before editing. Evidence first, fix second.
 
-Keep the terminal beside your editor. Install the **VS Code Go extension** (or
-your editor's `gopls` integration) so you see errors *as you type* — that's your
-fast loop, the equivalent of a file-watcher. If you have to alt-tab to see
-errors, your loop is too slow and you'll learn slower.
+The suite is intentionally red at the beginning. It should fail assertions and
+deliberate `t.Fatal("TODO...")` markers, not fail to compile.
 
-## Getting started
+## Ten sets / ten business days
 
-```sh
-go version          # need Go 1.24+ (any recent Go is fine)
-go test ./set01/    # should print FAILURES — that's the starting line
-```
+| Set | Focus | Production habit |
+|---|---|---|
+| 01 | Functions, control flow, strings, slices, maps | Predict output; debug basic logic |
+| 02 | Structs, methods, pointers, composition | Recognize copies versus mutation |
+| 03 | Errors and interfaces | Wrap causes; program to behavior |
+| 04 | Testing and tooling | Write table tests; expose weak tests |
+| 05 | JSON and files | Own resources; preserve error causes |
+| 06 | HTTP servers and clients | Test handlers and clients in memory |
+| 07 | Goroutines, channels, `select` | Diagnose deadlocks; justify concurrency |
+| 08 | Races, synchronization, context | Use the race detector; stop workers |
+| 09 | Existing multi-package codebase | Trace, diagnose, and make reviewable changes |
+| 10 | Task tracker CLI + HTTP capstone | Integrate persistence, APIs, tests, and safety |
 
-Then start turning `set01` green.
-
-## The six sets
-
-Work through them in order; within a set, go alphabetically (`a_`, `b_`, ...).
-
-| Set | Theme | You learn |
-|-----|-------|-----------|
-| **set01** | Fundamentals | functions, control flow, strings & runes, slices, maps |
-| **set02** | Types & behavior | structs, methods, errors `(T, error)`, interfaces, pointers |
-| **set03** | Standard library | JSON, files, a small HTTP server |
-| **set04** | Concurrency | goroutines, channels, `select`, `sync.Mutex`, the race detector |
-| **set05** | Real projects | packages, modules, imports, the `go` toolchain |
-| **set06** | Capstone | build a task-tracker CLI that uses all of the above |
-
-Some runnable programs are launched directly, e.g.:
-
-```sh
-go run ./set03/c_http          # the HTTP server
-go run ./set05/cmd/hello Ada   # cross-package program
-go run ./set06 add "learn go"  # the capstone CLI
-```
+Plan for four to six focused hours per set. Some learners will finish the early
+sets faster and need the optional experiments; concurrency and the capstone may
+take longer. Stop at a sensible checkpoint rather than rushing to collect green
+checks without understanding them.
 
 ## Rules of engagement
 
-- Replace `// TODO` stubs with your implementation. Don't edit the `_test.go`
-  files (they define what "correct" means) or the done-for-you examples.
-- Questions embedded as `// Q:` comments want written answers — edit the file
-  and fill in the `// A:` line. Writing it down is how you find out whether you
-  actually understand it.
+- Make an independent attempt before asking for a solution.
+- Do not edit tests unless the set explicitly says the test belongs to you.
+  Sets 04, 09, and 10 deliberately include learner-authored tests.
+- Answer every `// Q:` before looking back or asking an assistant.
+- Keep [MISTAKES.md](MISTAKES.md): symptom, theory, cause, fix, reusable rule.
+- Prefer standard-library documentation: `go doc` and <https://pkg.go.dev/std>.
+- Run `go fmt`; do not hand-format Go.
+- A working solution is not finished until you can explain it and remove
+  temporary debug output.
 
-## When you're stuck
+## Using AI without outsourcing the learning
 
-- Give it an honest go, jot your thoughts as a comment, and move on — come back
-  after the next exercise.
-- Ask an LLM to *explain the concept* (not solve the exercise — the repo's
-  `AGENTS.md` tells it not to). Pasting a compiler error verbatim gets great
-  explanations.
-- Two references you'll use constantly:
-  - <https://pkg.go.dev/std> — the standard library (Go's Hoogle)
-  - <https://gobyexample.com> — short runnable examples of every feature
+AI is allowed as a tutor, not as a substitute author.
 
-## After you finish
+1. Work independently for at least 15 minutes and record your current theory.
+2. Ask for a hint, concept explanation, documentation pointer, or interpretation
+   of an exact compiler/test/race error before asking for code.
+3. Never paste a complete generated solution into an exercise.
+4. If AI suggests a fragment, explain every line, adapt it, and test a case it
+   did not mention.
+5. Make predictions before execution without AI assistance.
+6. At the end of each set, reproduce one core pattern from memory.
 
-See [set06/C_FAREWELL.md](set06/C_FAREWELL.md) — a curated "what next" list. The
-short version: start your own project immediately. You'll learn more in the
-first week of building than in any tutorial.
+The repository's [AGENTS.md](AGENTS.md) tells coding assistants not to solve the
+exercises. That constraint is part of the course design.
+
+## Set completion check
+
+Before moving on:
+
+- targeted and full-set tests are green;
+- `go fmt` and `go vet` are clean for the set;
+- you completed the debugging task and wrote its cause in the mistake log;
+- you can explain one tradeoff from memory;
+- your changes are small enough that another engineer could review them.
+
+Course maintainers should use [CURRICULUM_CHECKLIST.md](CURRICULUM_CHECKLIST.md)
+when revising exercises.

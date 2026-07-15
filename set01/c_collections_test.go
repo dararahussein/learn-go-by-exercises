@@ -14,6 +14,12 @@ func TestDoubled(t *testing.T) {
 	}
 }
 
+func TestArrayTotal(t *testing.T) {
+	if got := ArrayTotal([3]int{10, 20, 30}); got != 60 {
+		t.Errorf("ArrayTotal = %d; want 60", got)
+	}
+}
+
 func TestSum(t *testing.T) {
 	cases := []struct {
 		in   []int
