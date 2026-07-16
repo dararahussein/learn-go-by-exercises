@@ -10,10 +10,8 @@ import (
 )
 
 func TestExercises(t *testing.T) {
-	if !t.Run("01_GetTasks", testGetTasks) {
-		return
-	}
-	t.Run("02_PostTasks", testPostTasks)
+	testGetTasks(t)
+	testPostTasks(t)
 }
 
 func testGetTasks(t *testing.T) {
@@ -22,14 +20,14 @@ func testGetTasks(t *testing.T) {
 	rec := httptest.NewRecorder()
 	NewHandler(store).ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/tasks", nil))
 	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/json" {
-		t.Errorf("GET /tasks status/content-type\n  got:  %d/%q\n  want: 200/%q", rec.Code, rec.Header().Get("Content-Type"), "application/json")
+		t.Fatalf("GET /tasks status/content-type: got %d/%q, want 200/%q", rec.Code, rec.Header().Get("Content-Type"), "application/json")
 	}
 	var got []task.Task
 	if err := json.NewDecoder(rec.Body).Decode(&got); err != nil {
 		t.Fatalf("decode GET /tasks: %v", err)
 	}
 	if len(got) != 1 || got[0].ID != 1 || got[0].Text != "learn Go" || got[0].Done {
-		t.Errorf("GET tasks\n  got:  %+v\n  want: one pending learn Go task", got)
+		t.Fatalf("GET tasks: got %+v, want one pending learn Go task", got)
 	}
 }
 

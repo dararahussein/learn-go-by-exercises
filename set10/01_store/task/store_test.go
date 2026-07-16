@@ -8,13 +8,9 @@ import (
 )
 
 func TestExercises(t *testing.T) {
-	if !t.Run("01_AddCompletePending", testAddCompletePending) {
-		return
-	}
-	if !t.Run("02_SaveLoadRoundTrip", testSaveLoadRoundTrip) {
-		return
-	}
-	t.Run("03_ConcurrentAdd", testConcurrentAdd)
+	testAddCompletePending(t)
+	testSaveLoadRoundTrip(t)
+	testConcurrentAdd(t)
 }
 
 func testAddCompletePending(t *testing.T) {
@@ -22,17 +18,17 @@ func testAddCompletePending(t *testing.T) {
 	a := s.Add("write Go")
 	b := s.Add("ship it")
 	if a.ID != 1 || b.ID != 2 {
-		t.Fatalf("IDs\n  got:  %d, %d\n  want: 1, 2", a.ID, b.ID)
+		t.Fatalf("IDs: got %d, %d, want 1, 2", a.ID, b.ID)
 	}
 	if err := s.Complete(1); err != nil {
 		t.Fatal(err)
 	}
 	pending := s.Pending()
 	if len(pending) != 1 || pending[0].Text != "ship it" {
-		t.Errorf("Pending\n  got:  %+v\n  want: only ship it", pending)
+		t.Fatalf("Pending: got %+v, want only ship it", pending)
 	}
 	if err := s.Complete(99); !errors.Is(err, ErrNotFound) {
-		t.Errorf("Complete(99) error\n  got:  %v\n  want: error wrapping ErrNotFound", err)
+		t.Fatalf("Complete(99) error: got %v, want error wrapping ErrNotFound", err)
 	}
 }
 
@@ -45,11 +41,11 @@ func testSaveLoadRoundTrip(t *testing.T) {
 	}
 	got, err := Load(path)
 	if err != nil || len(got.Tasks) != 1 || got.Tasks[0].Text != "persist me" {
-		t.Errorf("Load\n  got:  (%+v, %v)\n  want: (one persist-me task, nil)", got, err)
+		t.Fatalf("Load: got (%+v, %v), want (one persist-me task, nil)", got, err)
 	}
 	missing, err := Load(filepath.Join(t.TempDir(), "missing.json"))
 	if err != nil || missing == nil || len(missing.Tasks) != 0 {
-		t.Errorf("Load(missing)\n  got:  (%+v, %v)\n  want: empty store", missing, err)
+		t.Fatalf("Load(missing): got (%+v, %v), want empty store", missing, err)
 	}
 }
 
@@ -62,6 +58,6 @@ func testConcurrentAdd(t *testing.T) {
 	}
 	wg.Wait()
 	if got := len(s.Pending()); got != 100 {
-		t.Errorf("Pending count\n  got:  %d\n  want: 100", got)
+		t.Fatalf("Pending count: got %d, want 100", got)
 	}
 }

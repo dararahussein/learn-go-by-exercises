@@ -10,19 +10,14 @@ import (
 var runRaceDemo = flag.Bool("race-demo", false, "run the deliberately racy counter test")
 
 func TestExercises(t *testing.T) {
-	if !t.Run("01_ObserveUnsafeCounter", testUnsafeCounterRace) {
-		return
+	if *runRaceDemo {
+		testUnsafeCounterRace(t)
 	}
-	if !t.Run("02_SafeCounter", testSafeCounter) {
-		return
-	}
-	t.Run("03_ConcurrentWordCount", testConcurrentWordCount)
+	testSafeCounter(t)
+	testConcurrentWordCount(t)
 }
 
 func testUnsafeCounterRace(t *testing.T) {
-	if !*runRaceDemo {
-		t.Skip("deliberate race demo; run with -args -race-demo")
-	}
 	var c UnsafeCounter
 	var wg sync.WaitGroup
 	for i := 0; i < 100; i++ {
@@ -42,7 +37,7 @@ func testSafeCounter(t *testing.T) {
 	}
 	wg.Wait()
 	if got := c.Value(); got != 1000 {
-		t.Errorf("Value\n  got:  %d\n  want: 1000", got)
+		t.Fatalf("Value: got %d, want 1000", got)
 	}
 }
 
@@ -50,6 +45,6 @@ func testConcurrentWordCount(t *testing.T) {
 	got := ConcurrentWordCount([]string{"go go", "gopher", "go gopher"})
 	want := map[string]int{"go": 3, "gopher": 2}
 	if !maps.Equal(got, want) {
-		t.Errorf("ConcurrentWordCount\n  got:  %v\n  want: %v", got, want)
+		t.Fatalf("ConcurrentWordCount: got %v, want %v", got, want)
 	}
 }

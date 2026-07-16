@@ -14,9 +14,7 @@ func TestExercises(t *testing.T) {
 		{"03_Average", testAverage},
 	}
 	for _, step := range steps {
-		if !t.Run(step.name, step.run) {
-			return
-		}
+		step.run(t)
 	}
 }
 
@@ -34,7 +32,7 @@ func testLastIndexOf(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := LastIndexOf(c.xs, c.target); got != c.want {
-			t.Errorf("LastIndexOf(%v, %d)\n  got:  %d\n  want: %d", c.xs, c.target, got, c.want)
+			t.Fatalf("LastIndexOf(%v, %d): got %d, want %d", c.xs, c.target, got, c.want)
 		}
 	}
 }
@@ -52,7 +50,7 @@ func testContains(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := Contains(c.xs, c.target); got != c.want {
-			t.Errorf("Contains(%v, %d)\n  got:  %v\n  want: %v", c.xs, c.target, got, c.want)
+			t.Fatalf("Contains(%v, %d): got %v, want %v", c.xs, c.target, got, c.want)
 		}
 	}
 }
@@ -69,7 +67,7 @@ func testAverage(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := Average(c.xs); got != c.want {
-			t.Errorf("Average(%v)\n  got:  %v\n  want: %v", c.xs, got, c.want)
+			t.Fatalf("Average(%v): got %v, want %v", c.xs, got, c.want)
 		}
 	}
 }

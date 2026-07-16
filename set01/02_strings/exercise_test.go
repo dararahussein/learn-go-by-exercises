@@ -16,15 +16,13 @@ func TestExercises(t *testing.T) {
 		{"05_Initials", testInitials},
 	}
 	for _, step := range steps {
-		if !t.Run(step.name, step.run) {
-			return
-		}
+		step.run(t)
 	}
 }
 
 func testShout(t *testing.T) {
 	if got := Shout("go"); got != "GO!" {
-		t.Errorf("Shout(\"go\")\n  got:  %q\n  want: %q", got, "GO!")
+		t.Fatalf("Shout(\"go\"): got %q, want %q", got, "GO!")
 	}
 }
 
@@ -37,7 +35,7 @@ func testCountVowels(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := CountVowels(c.in); got != c.want {
-			t.Errorf("CountVowels(%q)\n  got:  %d\n  want: %d", c.in, got, c.want)
+			t.Fatalf("CountVowels(%q): got %d, want %d", c.in, got, c.want)
 		}
 	}
 }
@@ -48,7 +46,7 @@ func testReverse(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := Reverse(c.in); got != c.want {
-			t.Errorf("Reverse(%q)\n  got:  %q\n  want: %q", c.in, got, c.want)
+			t.Fatalf("Reverse(%q): got %q, want %q", c.in, got, c.want)
 		}
 	}
 }
@@ -62,7 +60,7 @@ func testIsPalindrome(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := IsPalindrome(c.in); got != c.want {
-			t.Errorf("IsPalindrome(%q)\n  got:  %v\n  want: %v", c.in, got, c.want)
+			t.Fatalf("IsPalindrome(%q): got %v, want %v", c.in, got, c.want)
 		}
 	}
 }
@@ -76,7 +74,7 @@ func testInitials(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := Initials(c.in); got != c.want {
-			t.Errorf("Initials(%q)\n  got:  %q\n  want: %q", c.in, got, c.want)
+			t.Fatalf("Initials(%q): got %q, want %q", c.in, got, c.want)
 		}
 	}
 }

@@ -20,17 +20,15 @@ type roundTripFunc func(*http.Request) (*http.Response, error)
 func (f roundTripFunc) RoundTrip(r *http.Request) (*http.Response, error) { return f(r) }
 
 func TestExercises(t *testing.T) {
-	if !t.Run("01_ResponseStatus", testValidationStatus) {
-		return
-	}
-	t.Run("02_CloseResponseBody", testFetchMessageClosesBody)
+	testValidationStatus(t)
+	testFetchMessageClosesBody(t)
 }
 
 func testValidationStatus(t *testing.T) {
 	rec := httptest.NewRecorder()
 	validationHandler(rec, httptest.NewRequest(http.MethodPost, "/", nil))
 	if rec.Code != http.StatusBadRequest {
-		t.Errorf("status\n  got:  %d\n  want: 400", rec.Code)
+		t.Fatalf("status: got %d, want 400", rec.Code)
 	}
 }
 
@@ -41,9 +39,9 @@ func testFetchMessageClosesBody(t *testing.T) {
 	})}
 	got, err := FetchMessage(client, "http://example.test")
 	if err != nil || got != "hello" {
-		t.Fatalf("FetchMessage\n  got:  (%q, %v)\n  want: (%q, nil)", got, err, "hello")
+		t.Fatalf("FetchMessage: got (%q, %v), want (%q, nil)", got, err, "hello")
 	}
 	if !body.closed {
-		t.Error("response body closed\n  got:  false\n  want: true")
+		t.Fatal("response body closed: got false, want true")
 	}
 }

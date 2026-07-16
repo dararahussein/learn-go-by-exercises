@@ -9,10 +9,8 @@ import (
 )
 
 func TestExercises(t *testing.T) {
-	if !t.Run("01_FetchPeople", testFetchPeople) {
-		return
-	}
-	t.Run("02_ErrorStatus", testFetchPeopleRejectsErrorStatus)
+	testFetchPeople(t)
+	testFetchPeopleRejectsErrorStatus(t)
 }
 
 func testFetchPeople(t *testing.T) {
@@ -20,7 +18,7 @@ func testFetchPeople(t *testing.T) {
 	t.Cleanup(server.Close)
 	got, err := FetchPeople(server.Client(), server.URL+"/people")
 	if err != nil || len(got) != 2 || got[0].Name != "Ada" {
-		t.Errorf("FetchPeople\n  got:  (%v, %v)\n  want: (2 people starting with Ada, nil)", got, err)
+		t.Fatalf("FetchPeople: got (%v, %v), want (2 people starting with Ada, nil)", got, err)
 	}
 }
 
@@ -30,6 +28,6 @@ func testFetchPeopleRejectsErrorStatus(t *testing.T) {
 	}))
 	t.Cleanup(server.Close)
 	if _, err := FetchPeople(server.Client(), server.URL); err == nil {
-		t.Error("FetchPeople(503) error\n  got:  nil\n  want: non-nil")
+		t.Fatal("FetchPeople(503) error: got nil, want non-nil")
 	}
 }

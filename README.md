@@ -48,12 +48,10 @@ The course is intentionally red at the beginning, but only the current module's
 next step should be visible. Failures should be assertions or deliberate
 `t.Fatal("TODO...")` markers, not compile errors.
 
-Comparison failures use the same compact shape throughout the course:
+Comparison failures stop at the first mismatch and use one compact line:
 
 ```text
-Abs(-3)
-  got:  0
-  want: 3
+Abs(-3): got 0, want 3
 ```
 
 One exception is `set04/02_weak_tests`: its inadequate test starts green on

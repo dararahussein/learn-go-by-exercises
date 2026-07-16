@@ -6,7 +6,7 @@ func TestNormalizeSpaces(t *testing.T) {
 	// This passes even while NormalizeSpaces is incorrect. Add at least four
 	// cases that cover trimming, three spaces, tabs, newlines, and empty input.
 	if got := NormalizeSpaces("hello  go"); got != "hello go" {
-		t.Errorf("NormalizeSpaces\n  got:  %q\n  want: %q", got, "hello go")
+		t.Fatalf("NormalizeSpaces: got %q, want %q", got, "hello go")
 	}
 }
 

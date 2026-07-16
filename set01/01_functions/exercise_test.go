@@ -18,15 +18,13 @@ func TestExercises(t *testing.T) {
 		{"07_FizzBuzz", testFizzBuzz},
 	}
 	for _, step := range steps {
-		if !t.Run(step.name, step.run) {
-			return
-		}
+		step.run(t)
 	}
 }
 
 func testDouble(t *testing.T) {
 	if got := Double(21); got != 42 {
-		t.Errorf("Double(21)\n  got:  %d\n  want: 42", got)
+		t.Fatalf("Double(21): got %d, want 42", got)
 	}
 }
 
@@ -34,7 +32,7 @@ func testAbs(t *testing.T) {
 	cases := []struct{ in, want int }{{-3, 3}, {3, 3}, {0, 0}, {-100, 100}}
 	for _, c := range cases {
 		if got := Abs(c.in); got != c.want {
-			t.Errorf("Abs(%d)\n  got:  %d\n  want: %d", c.in, got, c.want)
+			t.Fatalf("Abs(%d): got %d, want %d", c.in, got, c.want)
 		}
 	}
 }
@@ -43,7 +41,7 @@ func testMax(t *testing.T) {
 	cases := []struct{ x, y, want int }{{1, 2, 2}, {2, 1, 2}, {-5, -3, -3}, {7, 7, 7}}
 	for _, c := range cases {
 		if got := Max(c.x, c.y); got != c.want {
-			t.Errorf("Max(%d, %d)\n  got:  %d\n  want: %d", c.x, c.y, got, c.want)
+			t.Fatalf("Max(%d, %d): got %d, want %d", c.x, c.y, got, c.want)
 		}
 	}
 }
@@ -54,7 +52,7 @@ func testClamp(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := Clamp(c.x, c.lo, c.hi); got != c.want {
-			t.Errorf("Clamp(%d, %d, %d)\n  got:  %d\n  want: %d", c.x, c.lo, c.hi, got, c.want)
+			t.Fatalf("Clamp(%d, %d, %d): got %d, want %d", c.x, c.lo, c.hi, got, c.want)
 		}
 	}
 }
@@ -62,11 +60,11 @@ func testClamp(t *testing.T) {
 func testDivMod(t *testing.T) {
 	q, r := DivMod(17, 5)
 	if q != 3 || r != 2 {
-		t.Errorf("DivMod(17, 5)\n  got:  (%d, %d)\n  want: (3, 2)", q, r)
+		t.Fatalf("DivMod(17, 5): got (%d, %d), want (3, 2)", q, r)
 	}
 	q, r = DivMod(10, 2)
 	if q != 5 || r != 0 {
-		t.Errorf("DivMod(10, 2)\n  got:  (%d, %d)\n  want: (5, 0)", q, r)
+		t.Fatalf("DivMod(10, 2): got (%d, %d), want (5, 0)", q, r)
 	}
 }
 
@@ -74,7 +72,7 @@ func testSumTo(t *testing.T) {
 	cases := []struct{ in, want int }{{1, 1}, {5, 15}, {100, 5050}, {0, 0}}
 	for _, c := range cases {
 		if got := SumTo(c.in); got != c.want {
-			t.Errorf("SumTo(%d)\n  got:  %d\n  want: %d", c.in, got, c.want)
+			t.Fatalf("SumTo(%d): got %d, want %d", c.in, got, c.want)
 		}
 	}
 }
@@ -88,7 +86,7 @@ func testFizzBuzz(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := FizzBuzz(c.in); got != c.want {
-			t.Errorf("FizzBuzz(%d)\n  got:  %q\n  want: %q", c.in, got, c.want)
+			t.Fatalf("FizzBuzz(%d): got %q, want %q", c.in, got, c.want)
 		}
 	}
 }
