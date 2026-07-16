@@ -3,14 +3,17 @@
 You are extending existing code, not starting from a blank file. Read all three
 packages before changing anything and keep each change small enough to review.
 
+Work in order: `01_store/task`, `02_http/api`, then `03_cli/cmd/task`. Each
+earlier module becomes a real dependency of the later one.
+
 Warm-up from memory: write the `errors.Is` branch and `httptest` setup you expect
 the completion endpoint test to need, then verify those predictions in docs.
 
 ## Core work order
 
-1. Make `go test ./set10/task` green: implement `Load`, `Add`, and `Pending`.
+1. Make `go test ./set10/01_store/task` green: implement `Load`, `Add`, and `Pending`.
    Diagnose the planted `Complete` bug rather than replacing it blindly.
-2. Run `go test -race ./set10/task`. HTTP handlers can call the store at the
+2. Run `go test -race ./set10/01_store/task`. HTTP handlers can call the store at the
    same time, so protect every read and write with the store's mutex.
 3. Implement the CLI commands and use them against a temporary JSON file.
 4. Make the provided HTTP GET test pass.

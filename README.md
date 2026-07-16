@@ -12,10 +12,12 @@ the feedback loop do most of the teaching.
 ## The feedback loop
 
 ```sh
-go test ./set01/                       # the failing board for one set
-go test -run TestReverse ./set01/      # one targeted test
-go test -race ./set08/                 # detect races
-go test -cover ./set04/                # inspect test coverage
+cd set01/01_functions                  # enter the current exercise module
+go test                                # show only the next unfinished exercise
+go test -v                             # include completed steps in the module
+cd ../..                               # return to the repository root
+go test ./set01/...                    # end-of-set check, run from repo root
+go test -race ./set08/...              # end-of-set race check
 go fmt ./...
 go vet ./...
 ```
@@ -24,19 +26,30 @@ If `go test -race` reports that the race detector requires CGO, use the
 project's Linux/WSL development environment or enable CGO with a supported C
 toolchain. That message is an environment problem, not evidence about the code.
 
+Each numbered directory is one exercise module with a focused test board. Most
+modules use one learner-facing `exercise.go`; the later repository and capstone
+modules contain realistic package layouts. Work through directories in numeric
+order. The board stops after the first failing step, so the terminal shows the
+thing you are doing now rather than every unfinished task in the set.
+
 For ordinary stub exercises:
 
 1. Read the task and test failure.
 2. Predict what must change.
 3. Make one small change.
-4. Run the narrowest relevant test.
-5. When it is green, refactor for clarity and run the full set.
+4. Run `go test` in the module again.
+5. When the whole module is green, refactor for clarity and enter the next
+   numbered directory.
 
-For `z_fixme` exercises, the implementation already exists and is wrong. Write
+For numbered `debugging` modules, the implementation already exists and is wrong. Write
 your theory in the `// A:` line before editing. Evidence first, fix second.
 
-The suite is intentionally red at the beginning. It should fail assertions and
-deliberate `t.Fatal("TODO...")` markers, not fail to compile.
+The course is intentionally red at the beginning, but only the current module's
+next step should be visible. Failures should be assertions or deliberate
+`t.Fatal("TODO...")` markers, not compile errors.
+
+One exception is `set04/02_weak_tests`: its inadequate test starts green on
+purpose. The exercise is to add cases that expose the implementation's bug.
 
 ## Ten sets / ten business days
 
@@ -90,7 +103,7 @@ exercises. That constraint is part of the course design.
 
 Before moving on:
 
-- targeted and full-set tests are green;
+- every numbered module and the full-set check are green;
 - `go fmt` and `go vet` are clean for the set;
 - you completed the debugging task and wrote its cause in the mistake log;
 - you can explain one tradeoff from memory;
@@ -111,7 +124,7 @@ git diff --check           # reject whitespace errors
 
 Then run each set normally and confirm it fails through assertions or an
 explicit learner-owned `t.Fatal`, never a compile error, panic, or timeout.
-`go vet ./...` intentionally reports the unexported JSON field in set05's
-`z_fixme.go`; that diagnostic is evidence for the exercise and disappears when
+`go vet ./...` intentionally reports the unexported JSON field in
+`set05/04_debugging/exercise.go`; that diagnostic is evidence for the exercise and disappears when
 the learner repairs it. The opt-in race demonstration in set08 is skipped during
 ordinary full-suite and race-detector runs.

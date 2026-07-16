@@ -3,10 +3,13 @@
 Run targeted tests while building. `Merge` is intentionally the hardest task;
 complete `Relay` first because it contains half of the same shape.
 
+Work in order: `01_goroutines`, then `02_channels`. Run `go test` inside the
+current directory.
+
 Warm-up from memory: explain why an HTTP client must close a response body even
 after it has read all the bytes.
 
-For the deadlock lab, run `go run ./set07/cmd/deadlock`, read the runtime dump,
+For the deadlock lab, run `go run ./set07/02_channels/cmd/deadlock`, read the runtime dump,
 write the cause in `cmd/deadlock/main.go`, then repair it. Do not reach for
 concurrency automatically: the reflection asks when a plain loop is better.
 

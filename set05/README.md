@@ -4,6 +4,9 @@ This set moves data across process boundaries. Reuse earlier structs, pointers,
 slices, maps, and wrapped errors while learning JSON tags, file permissions,
 `defer`, and resource cleanup.
 
+Work in order: `01_json`, `02_files`, `03_config`, `04_debugging`. Enter the
+current directory and run plain `go test` for focused feedback.
+
 Warm-up from memory: sketch `var p Person` followed by the call that lets
 `json.Unmarshal` modify p. Explain the `&` before checking earlier work.
 
