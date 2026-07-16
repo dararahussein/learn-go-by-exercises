@@ -22,17 +22,17 @@ func testAddCompletePending(t *testing.T) {
 	a := s.Add("write Go")
 	b := s.Add("ship it")
 	if a.ID != 1 || b.ID != 2 {
-		t.Fatalf("IDs = %d, %d; want 1, 2", a.ID, b.ID)
+		t.Fatalf("IDs\n  got:  %d, %d\n  want: 1, 2", a.ID, b.ID)
 	}
 	if err := s.Complete(1); err != nil {
 		t.Fatal(err)
 	}
 	pending := s.Pending()
 	if len(pending) != 1 || pending[0].Text != "ship it" {
-		t.Errorf("Pending = %+v; want only ship it", pending)
+		t.Errorf("Pending\n  got:  %+v\n  want: only ship it", pending)
 	}
 	if err := s.Complete(99); !errors.Is(err, ErrNotFound) {
-		t.Errorf("Complete(99) error %v should wrap ErrNotFound", err)
+		t.Errorf("Complete(99) error\n  got:  %v\n  want: error wrapping ErrNotFound", err)
 	}
 }
 
@@ -45,11 +45,11 @@ func testSaveLoadRoundTrip(t *testing.T) {
 	}
 	got, err := Load(path)
 	if err != nil || len(got.Tasks) != 1 || got.Tasks[0].Text != "persist me" {
-		t.Errorf("Load = (%+v, %v)", got, err)
+		t.Errorf("Load\n  got:  (%+v, %v)\n  want: (one persist-me task, nil)", got, err)
 	}
 	missing, err := Load(filepath.Join(t.TempDir(), "missing.json"))
 	if err != nil || missing == nil || len(missing.Tasks) != 0 {
-		t.Errorf("Load(missing) = (%+v, %v); want empty store", missing, err)
+		t.Errorf("Load(missing)\n  got:  (%+v, %v)\n  want: empty store", missing, err)
 	}
 }
 
@@ -62,6 +62,6 @@ func testConcurrentAdd(t *testing.T) {
 	}
 	wg.Wait()
 	if got := len(s.Pending()); got != 100 {
-		t.Errorf("Pending count = %d; want 100", got)
+		t.Errorf("Pending count\n  got:  %d\n  want: 100", got)
 	}
 }

@@ -32,7 +32,7 @@ func testReadLines(t *testing.T) {
 	}
 	got, err := ReadLines(path)
 	if err != nil || !slices.Equal(got, want) {
-		t.Errorf("ReadLines = (%v, %v); want (%v, nil)", got, err, want)
+		t.Errorf("ReadLines\n  got:  (%v, %v)\n  want: (%v, nil)", got, err, want)
 	}
 }
 
@@ -44,7 +44,7 @@ func testWordFrequency(t *testing.T) {
 	got, err := WordFrequency(path)
 	want := map[string]int{"go": 2, "gopher": 1, "Go": 1}
 	if err != nil || !maps.Equal(got, want) {
-		t.Errorf("WordFrequency = (%v, %v); want %v", got, err, want)
+		t.Errorf("WordFrequency\n  got:  (%v, %v)\n  want: %v", got, err, want)
 	}
 }
 
@@ -54,13 +54,13 @@ func testCountLines(t *testing.T) {
 		t.Fatal(err)
 	}
 	if got, err := CountLines(path); err != nil || got != 3 {
-		t.Errorf("CountLines = (%d, %v); want (3, nil)", got, err)
+		t.Errorf("CountLines\n  got:  (%d, %v)\n  want: (3, nil)", got, err)
 	}
 }
 
 func testReadLinesMissing(t *testing.T) {
 	if _, err := ReadLines(filepath.Join(t.TempDir(), "missing")); err == nil {
-		t.Error("reading a missing file should return an error")
+		t.Error("ReadLines(missing) error\n  got:  nil\n  want: non-nil")
 	}
 }
 

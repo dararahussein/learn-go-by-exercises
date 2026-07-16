@@ -20,7 +20,7 @@ func testFetchPeople(t *testing.T) {
 	t.Cleanup(server.Close)
 	got, err := FetchPeople(server.Client(), server.URL+"/people")
 	if err != nil || len(got) != 2 || got[0].Name != "Ada" {
-		t.Errorf("FetchPeople = (%v, %v)", got, err)
+		t.Errorf("FetchPeople\n  got:  (%v, %v)\n  want: (2 people starting with Ada, nil)", got, err)
 	}
 }
 
@@ -30,6 +30,6 @@ func testFetchPeopleRejectsErrorStatus(t *testing.T) {
 	}))
 	t.Cleanup(server.Close)
 	if _, err := FetchPeople(server.Client(), server.URL); err == nil {
-		t.Error("FetchPeople should reject a 503 response")
+		t.Error("FetchPeople(503) error\n  got:  nil\n  want: non-nil")
 	}
 }

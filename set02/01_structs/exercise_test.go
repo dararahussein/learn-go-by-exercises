@@ -32,7 +32,7 @@ func TestExercises(t *testing.T) {
 
 func testScaleString(t *testing.T) {
 	if got := Celsius.String(); got != "°C" {
-		t.Errorf("Celsius.String() == %q, want \"°C\"", got)
+		t.Errorf("Celsius.String()\n  got:  %q\n  want: \"°C\"", got)
 	}
 }
 
@@ -49,7 +49,7 @@ func testToCelsius(t *testing.T) {
 	for _, c := range cases {
 		got := c.in.ToCelsius()
 		if got.Scale != Celsius || !closeTo(got.Degrees, c.want) {
-			t.Errorf("(%v%v).ToCelsius() == %v%v, want %v°C", c.in.Degrees, c.in.Scale, got.Degrees, got.Scale, c.want)
+			t.Errorf("(%v%v).ToCelsius()\n  got:  %v%v\n  want: %v°C", c.in.Degrees, c.in.Scale, got.Degrees, got.Scale, c.want)
 		}
 	}
 }
@@ -67,7 +67,7 @@ func testToFahrenheit(t *testing.T) {
 	for _, c := range cases {
 		got := c.in.ToFahrenheit()
 		if got.Scale != Fahrenheit || !closeTo(got.Degrees, c.want) {
-			t.Errorf("(%v%v).ToFahrenheit() == %v%v, want %v°F", c.in.Degrees, c.in.Scale, got.Degrees, got.Scale, c.want)
+			t.Errorf("(%v%v).ToFahrenheit()\n  got:  %v%v\n  want: %v°F", c.in.Degrees, c.in.Scale, got.Degrees, got.Scale, c.want)
 		}
 	}
 }
@@ -86,7 +86,7 @@ func testIsFreezing(t *testing.T) {
 	}
 	for _, c := range cases {
 		if got := c.in.IsFreezing(); got != c.want {
-			t.Errorf("(%v%v).IsFreezing() == %v, want %v", c.in.Degrees, c.in.Scale, got, c.want)
+			t.Errorf("(%v%v).IsFreezing()\n  got:  %v\n  want: %v", c.in.Degrees, c.in.Scale, got, c.want)
 		}
 	}
 }
@@ -95,10 +95,10 @@ func testWarmer(t *testing.T) {
 	hot := Temperature{30, Celsius}
 	cold := Temperature{30, Fahrenheit} // ~ -1.1°C
 	if got := Warmer(hot, cold); got != hot {
-		t.Errorf("Warmer(30°C, 30°F) == %v%v, want 30°C", got.Degrees, got.Scale)
+		t.Errorf("Warmer(30°C, 30°F)\n  got:  %v%v\n  want: 30°C", got.Degrees, got.Scale)
 	}
 	if got := Warmer(cold, hot); got != hot {
-		t.Errorf("Warmer(30°F, 30°C) == %v%v, want 30°C", got.Degrees, got.Scale)
+		t.Errorf("Warmer(30°F, 30°C)\n  got:  %v%v\n  want: 30°C", got.Degrees, got.Scale)
 	}
 }
 
@@ -108,6 +108,6 @@ func testEmbeddedTemperature(t *testing.T) {
 		RecordedAt:  "09:00",
 	}
 	if got := r.ToCelsius(); got.Scale != Celsius || !closeTo(got.Degrees, 0) {
-		t.Errorf("promoted ToCelsius() = %+v; want 0 Celsius", got)
+		t.Errorf("promoted ToCelsius()\n  got:  %+v\n  want: 0 Celsius", got)
 	}
 }

@@ -19,18 +19,18 @@ func testShapes(t *testing.T) {
 	r := Rectangle{Width: 3, Height: 4}
 	c := Circle{Radius: 1}
 	if !near(r.Perimeter(), 14) || !near(c.Area(), math.Pi) {
-		t.Errorf("shape methods returned perimeter=%v area=%v", r.Perimeter(), c.Area())
+		t.Errorf("shape methods\n  got:  perimeter=%v area=%v\n  want: perimeter=14 area=%v", r.Perimeter(), c.Area(), math.Pi)
 	}
 	if got := TotalArea([]Shape{r, c}); !near(got, 12+math.Pi) {
-		t.Errorf("TotalArea = %v; want %v", got, 12+math.Pi)
+		t.Errorf("TotalArea\n  got:  %v\n  want: %v", got, 12+math.Pi)
 	}
 	if got := Describe(r); got != "area=12.00 perimeter=14.00" {
-		t.Errorf("Describe = %q", got)
+		t.Errorf("Describe\n  got:  %q\n  want: %q", got, "area=12.00 perimeter=14.00")
 	}
 }
 
 func testLabelStringer(t *testing.T) {
 	if got := fmt.Sprint(Label{Text: "ready"}); got != "[ready]" {
-		t.Errorf("fmt.Sprint(Label) = %q; want [ready]", got)
+		t.Errorf("fmt.Sprint(Label)\n  got:  %q\n  want: %q", got, "[ready]")
 	}
 }

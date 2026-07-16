@@ -42,7 +42,7 @@ func testSafeCounter(t *testing.T) {
 	}
 	wg.Wait()
 	if got := c.Value(); got != 1000 {
-		t.Errorf("Value = %d; want 1000", got)
+		t.Errorf("Value\n  got:  %d\n  want: 1000", got)
 	}
 }
 
@@ -50,6 +50,6 @@ func testConcurrentWordCount(t *testing.T) {
 	got := ConcurrentWordCount([]string{"go go", "gopher", "go gopher"})
 	want := map[string]int{"go": 3, "gopher": 2}
 	if !maps.Equal(got, want) {
-		t.Errorf("ConcurrentWordCount = %v; want %v", got, want)
+		t.Errorf("ConcurrentWordCount\n  got:  %v\n  want: %v", got, want)
 	}
 }

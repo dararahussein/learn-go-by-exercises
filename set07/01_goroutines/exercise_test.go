@@ -30,19 +30,19 @@ func testRunAll(t *testing.T) {
 	}
 	RunAll(fns)
 	if got := count.Load(); got != 100 {
-		t.Errorf("RunAll count = %d; want 100", got)
+		t.Errorf("RunAll count\n  got:  %d\n  want: 100", got)
 	}
 }
 
 func testParallel(t *testing.T) {
 	fns := []func() int{func() int { return 1 }, func() int { return 2 }, func() int { return 3 }}
 	if got := Parallel(fns); !slices.Equal(got, []int{1, 2, 3}) {
-		t.Errorf("Parallel = %v; want [1 2 3]", got)
+		t.Errorf("Parallel\n  got:  %v\n  want: [1 2 3]", got)
 	}
 }
 
 func testSumConcurrent(t *testing.T) {
 	if got := SumConcurrent([][]int{{1, 2}, {3, 4}, {5}}); got != 15 {
-		t.Errorf("SumConcurrent = %d; want 15", got)
+		t.Errorf("SumConcurrent\n  got:  %d\n  want: 15", got)
 	}
 }

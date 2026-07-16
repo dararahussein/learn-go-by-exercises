@@ -30,7 +30,7 @@ func testValidationStatus(t *testing.T) {
 	rec := httptest.NewRecorder()
 	validationHandler(rec, httptest.NewRequest(http.MethodPost, "/", nil))
 	if rec.Code != http.StatusBadRequest {
-		t.Errorf("status = %d; want 400", rec.Code)
+		t.Errorf("status\n  got:  %d\n  want: 400", rec.Code)
 	}
 }
 
@@ -41,9 +41,9 @@ func testFetchMessageClosesBody(t *testing.T) {
 	})}
 	got, err := FetchMessage(client, "http://example.test")
 	if err != nil || got != "hello" {
-		t.Fatalf("FetchMessage = (%q, %v)", got, err)
+		t.Fatalf("FetchMessage\n  got:  (%q, %v)\n  want: (%q, nil)", got, err, "hello")
 	}
 	if !body.closed {
-		t.Error("FetchMessage leaked the response body")
+		t.Error("response body closed\n  got:  false\n  want: true")
 	}
 }

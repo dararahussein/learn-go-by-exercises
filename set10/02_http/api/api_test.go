@@ -22,14 +22,14 @@ func testGetTasks(t *testing.T) {
 	rec := httptest.NewRecorder()
 	NewHandler(store).ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/tasks", nil))
 	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/json" {
-		t.Errorf("GET status/type = %d/%q", rec.Code, rec.Header().Get("Content-Type"))
+		t.Errorf("GET /tasks status/content-type\n  got:  %d/%q\n  want: 200/%q", rec.Code, rec.Header().Get("Content-Type"), "application/json")
 	}
 	var got []task.Task
 	if err := json.NewDecoder(rec.Body).Decode(&got); err != nil {
 		t.Fatalf("decode GET /tasks: %v", err)
 	}
 	if len(got) != 1 || got[0].ID != 1 || got[0].Text != "learn Go" || got[0].Done {
-		t.Errorf("GET tasks = %+v; want one pending learn Go task", got)
+		t.Errorf("GET tasks\n  got:  %+v\n  want: one pending learn Go task", got)
 	}
 }
 

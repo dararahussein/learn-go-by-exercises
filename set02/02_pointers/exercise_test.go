@@ -22,7 +22,7 @@ func testSetZero(t *testing.T) {
 	x := 42
 	SetZero(&x)
 	if x != 0 {
-		t.Errorf("after SetZero(&x), x = %d; want 0", x)
+		t.Errorf("after SetZero(&x), x\n  got:  %d\n  want: 0", x)
 	}
 }
 
@@ -30,7 +30,7 @@ func testIncrement(t *testing.T) {
 	x := 5
 	Increment(&x)
 	if x != 6 {
-		t.Errorf("after Increment(&x), x = %d; want 6", x)
+		t.Errorf("after Increment(&x), x\n  got:  %d\n  want: 6", x)
 	}
 }
 
@@ -39,6 +39,6 @@ func testCounter(t *testing.T) {
 	c.Inc()
 	c.Inc()
 	if got := c.Value(); got != 2 {
-		t.Errorf("Value() = %d; want 2", got)
+		t.Errorf("Value()\n  got:  %d\n  want: 2", got)
 	}
 }

@@ -22,10 +22,10 @@ func (p fakePrices) Price(sku string) (int, error) {
 func TestCartTotal(t *testing.T) {
 	prices := fakePrices{"book": 2500, "pen": 200}
 	if got, err := CartTotal(prices, []string{"book", "pen"}); got != 2700 || err != nil {
-		t.Errorf("CartTotal = (%d, %v); want (2700, nil)", got, err)
+		t.Errorf("CartTotal\n  got:  (%d, %v)\n  want: (2700, nil)", got, err)
 	}
 	_, err := CartTotal(prices, []string{"book", "missing"})
 	if !errors.Is(err, errorexercises.ErrNotFound) || !strings.Contains(err.Error(), "missing") {
-		t.Errorf("error %v should preserve ErrNotFound and mention missing", err)
+		t.Errorf("CartTotal error\n  got:  %v\n  want: wrapped ErrNotFound mentioning missing", err)
 	}
 }
