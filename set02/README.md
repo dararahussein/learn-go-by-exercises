@@ -5,7 +5,7 @@ original value. Pointers come before interfaces so the next set can make method
 sets and interface satisfaction concrete.
 
 Work in order: `01_structs`, `02_pointers`, `03_playlist`, `04_debugging`.
-Enter each directory and run plain `go test`; its board stops at the first
+Enter each directory and run `check`; its board stops at the first
 unfinished step.
 
 Complete Temperature, Counter, and Playlist. Playlist is the application task

@@ -12,9 +12,9 @@ the feedback loop do most of the teaching.
 ## The feedback loop
 
 ```sh
+go install ./cmd/check                    # one-time setup from the repo root
 cd set01/01_functions                  # enter the current exercise module
-go test                                # show only the next unfinished exercise
-go test -v                             # include completed steps in the module
+check                                  # show only the next unfinished exercise
 cd ../..                               # return to the repository root
 go test ./set01/...                    # end-of-set check, run from repo root
 go test -race ./set08/...              # end-of-set race check
@@ -37,7 +37,7 @@ For ordinary stub exercises:
 1. Read the task and test failure.
 2. Predict what must change.
 3. Make one small change.
-4. Run `go test` in the module again.
+4. Run `check` in the module again.
 5. When the whole module is green, refactor for clarity and enter the next
    numbered directory.
 
@@ -48,11 +48,15 @@ The course is intentionally red at the beginning, but only the current module's
 next step should be visible. Failures should be assertions or deliberate
 `t.Fatal("TODO...")` markers, not compile errors.
 
-Comparison failures stop at the first mismatch and use one compact line:
+`check` stops at the first mismatch and removes Go's test-runner noise:
 
 ```text
-Abs(-3): got 0, want 3
+Abs(-3)
+  your output: 0
+  expected:    3
 ```
+
+Use plain `go test` whenever you want the complete standard Go test output.
 
 One exception is `set04/02_weak_tests`: its inadequate test starts green on
 purpose. The exercise is to add cases that expose the implementation's bug.

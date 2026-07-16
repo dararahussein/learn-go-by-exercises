@@ -2,12 +2,12 @@
 
 Start with the unsafe counter exactly as written:
 
-Work in order: `01_races`, then `02_context`. Use plain `go test` inside each
+Work in order: `01_races`, then `02_context`. Use `check` inside each
 directory except for the explicit race demonstration below.
 
 ```sh
-go test -run 'TestExercises/01_ObserveUnsafeCounter' ./set08/01_races -args -race-demo
-go test -race -run 'TestExercises/01_ObserveUnsafeCounter' ./set08/01_races -args -race-demo
+go test ./set08/01_races -args -race-demo
+go test -race ./set08/01_races -args -race-demo
 ```
 
 The first command may appear green. The second should report a data race. Save

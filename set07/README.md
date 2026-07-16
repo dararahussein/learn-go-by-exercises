@@ -3,7 +3,7 @@
 Run targeted tests while building. `Merge` is intentionally the hardest task;
 complete `Relay` first because it contains half of the same shape.
 
-Work in order: `01_goroutines`, then `02_channels`. Run `go test` inside the
+Work in order: `01_goroutines`, then `02_channels`. Run `check` inside the
 current directory.
 
 Warm-up from memory: explain why an HTTP client must close a response body even

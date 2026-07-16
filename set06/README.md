@@ -5,7 +5,7 @@ Clients own response bodies and should accept dependencies that make timeouts
 and tests controllable.
 
 Work in order: `01_server`, `02_client`, `03_debugging`. The client intentionally
-imports the completed server module. Run `go test` inside one module at a time.
+imports the completed server module. Run `check` inside one module at a time.
 
 Warm-up from memory: write an error wrap that adds an operation name while
 preserving the cause for `errors.Is`.

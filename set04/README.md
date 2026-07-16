@@ -3,7 +3,7 @@
 Until now, tests described the work. Today you write part of the specification.
 The test files in this set are deliberately editable.
 
-Work in order: `01_test_first`, then `02_weak_tests`. Run `go test` from inside
+Work in order: `01_test_first`, then `02_weak_tests`. Run `check` from inside
 the current directory; unlike earlier sets, the test itself is part of the
 exercise.
 
@@ -12,7 +12,7 @@ returns it to the caller.
 
 Work in this order:
 
-1. Enter `01_test_first`, run `go test`, and read the deliberate failure.
+1. Enter `01_test_first`, run `check`, and read the deliberate failure.
 2. Fill the case table in `01_test_first/exercise_test.go` from the prose contract. Include at
    least one empty, mixed-case, repeated-space, and punctuation case.
 3. Implement `Slugify` only after the tests express the contract.

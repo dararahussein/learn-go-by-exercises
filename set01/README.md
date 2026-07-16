@@ -9,7 +9,7 @@ slices, and maps. Work in numeric order:
 4. `04_application`
 5. `05_debugging`
 
-Enter a directory and keep `go test` running there. Do not use
+Enter a directory and keep `check` running there. Do not use
 `go test ./set01/...` until the end-of-set check; that broader command is
 supposed to revisit every completed module.
 
